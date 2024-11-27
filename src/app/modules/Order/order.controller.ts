@@ -1,12 +1,22 @@
 import { Request, Response } from "express";
 import { createCar, getRevenue } from "./order.service";
 import orderInterface from "./order.interface";
+import orderValidationSchema from "./order.validation";
 
 export const OrderCar = async (req: Request, res: Response) => {
   try {
     const orderInfo: orderInterface = req.body;
     const { carId } = req.params;
-    const result = await createCar(orderInfo, carId);
+
+    const { error, value } = orderValidationSchema.validate(orderInfo);
+
+    if (error) {
+      return res.status(400).json({
+        message: error,
+      });
+    }
+
+    const result = await createCar(value, carId);
 
     res.status(200).json({
       message: "Order created successfully",

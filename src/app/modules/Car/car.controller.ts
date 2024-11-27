@@ -6,12 +6,21 @@ import {
   getSingle,
   updateAcar,
 } from "./car.service";
+import carValidationSchema from "./car.validation";
 
 export const createCar = async (req: Request, res: Response) => {
   try {
     const carData = req.body;
 
-    const result = await createACar(carData);
+    const { error, value } = carValidationSchema.validate(carData);
+
+    if (error) {
+      return res.status(400).json({
+        message: error,
+      });
+    }
+
+    const result = await createACar(value);
 
     res.status(200).json({
       message: "Car created successfully!",
@@ -55,7 +64,7 @@ export const GetSpecificCar = async (req: Request, res: Response) => {
 export const updateCar = async (req: Request, res: Response) => {
   try {
     const updateData = req.body;
-    const {carId} = req.params;
+    const { carId } = req.params;
 
     const result = await updateAcar(carId, updateData);
     res.status(200).json({
