@@ -1,9 +1,10 @@
 import CarModel from "../Car/car.model";
 import orderInterface from "./order.interface";
 import { ObjectId } from "mongodb";
+import OrderModel from "./order.model";
 
-export const createCar = async (orderInfo: orderInterface, carId: any) => {
-  const car = await CarModel.findOne({ _id: new ObjectId(carId) });
+export const createOrder = async (orderInfo: orderInterface) => {
+  const car = await CarModel.findOne({ _id: new ObjectId(orderInfo?.car) });
 
   if (!car) {
     return "Car model not found";
@@ -14,25 +15,25 @@ export const createCar = async (orderInfo: orderInterface, carId: any) => {
   }
 
   const newQuantity = car.quantity - orderInfo?.quantity;
-  const inStock = newQuantity <= 0;
 
-  return await CarModel.updateOne(
-    { _id: new ObjectId(carId) },
+   await CarModel.updateOne(
+    { _id: new ObjectId(orderInfo?.car) },
     {
       $set: {
         quantity: newQuantity,
-        inStock: inStock,
+        inStock: newQuantity < 1 ? false : true,
       },
     }
   );
+  return await OrderModel.create(orderInfo)
 };
 
 export const getRevenue = async () => {
-  return await CarModel.aggregate([
+  return await OrderModel.aggregate([
     {
       $group: {
         _id: null,
-        totalRevenue: { $count: "$price" },
+        totalRevenue: { $sum: "$totalPrice" },
       },
     },
   ]);

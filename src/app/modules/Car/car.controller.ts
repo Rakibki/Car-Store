@@ -8,20 +8,19 @@ import {
 } from "./car.service";
 import carValidationSchema from "./car.validation";
 
+
+
+// create a car
 export const createCar = async (req: Request, res: Response) => {
   try {
     const carData = req.body;
-
     const { error, value } = carValidationSchema.validate(carData);
-
     if (error) {
       return res.status(400).json({
         message: error,
       });
     }
-
     const result = await createACar(value);
-
     res.status(200).json({
       message: "Car created successfully!",
       success: true,
@@ -32,6 +31,8 @@ export const createCar = async (req: Request, res: Response) => {
   }
 };
 
+
+// get all cars
 export const getAllCars = async (req: Request, res: Response) => {
   try {
     const result = await AllCars();
@@ -45,6 +46,7 @@ export const getAllCars = async (req: Request, res: Response) => {
   }
 };
 
+// Get a Specific Car by car id
 export const GetSpecificCar = async (req: Request, res: Response) => {
   try {
     const { carId } = req.params;
@@ -60,7 +62,8 @@ export const GetSpecificCar = async (req: Request, res: Response) => {
   }
 };
 
-// issue
+
+// update a car
 export const updateCar = async (req: Request, res: Response) => {
   try {
     const updateData = req.body;
@@ -77,6 +80,9 @@ export const updateCar = async (req: Request, res: Response) => {
   }
 };
 
+
+
+// delete a car
 export const deleteCar = async (req: Request, res: Response) => {
   try {
     const { carId } = req.params;

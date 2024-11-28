@@ -3,6 +3,8 @@ import { createCar, deleteCar, getAllCars, GetSpecificCar, updateCar } from "./c
 
 const carRouter = express.Router();
 
+
+// car related api
 carRouter.post("/api/cars", createCar);
 carRouter.get("/api/cars", getAllCars);
 carRouter.get("/api/cars/:carId", GetSpecificCar);
