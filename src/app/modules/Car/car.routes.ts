@@ -1,8 +1,13 @@
 import express from "express";
-import { createCar, deleteCar, getAllCars, GetSpecificCar, updateCar } from "./car.controller";
+import {
+  createCar,
+  deleteCar,
+  getAllCars,
+  GetSpecificCar,
+  updateCar,
+} from "./car.controller";
 
 const carRouter = express.Router();
-
 
 // car related api
 carRouter.post("/api/cars", createCar);

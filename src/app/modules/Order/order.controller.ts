@@ -1,27 +1,36 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { createOrder, getRevenue } from "./order.service";
 import orderInterface from "./order.interface";
 import orderValidationSchema from "./order.validation";
 
 // place a order
-export const OrderCar = async (req: Request, res: Response) => {
+export const OrderCar: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const orderInfo: orderInterface = req.body;
     const { error, value } = orderValidationSchema.validate(orderInfo);
 
     if (error) {
-      return res.status(400).json({
-        message: error,
+      res.status(400).json({
+        message: error.message,
       });
     }
+
     const result = await createOrder(value);
+
     res.status(200).json({
       message: "Order created successfully",
       status: true,
       data: result,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
 

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler, NextFunction } from "express";
 import {
   AllCars,
   createACar,
@@ -8,15 +8,17 @@ import {
 } from "./car.service";
 import carValidationSchema from "./car.validation";
 
-
-
 // create a car
-export const createCar = async (req: Request, res: Response) => {
+export const createCar: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const carData = req.body;
     const { error, value } = carValidationSchema.validate(carData);
     if (error) {
-      return res.status(400).json({
+      res.status(400).json({
         message: error,
       });
     }
@@ -27,10 +29,9 @@ export const createCar = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (e) {
-    console.log(e);
+    next(e);
   }
 };
-
 
 // get all cars
 export const getAllCars = async (req: Request, res: Response) => {
@@ -62,7 +63,6 @@ export const GetSpecificCar = async (req: Request, res: Response) => {
   }
 };
 
-
 // update a car
 export const updateCar = async (req: Request, res: Response) => {
   try {
@@ -79,8 +79,6 @@ export const updateCar = async (req: Request, res: Response) => {
     console.log(e);
   }
 };
-
-
 
 // delete a car
 export const deleteCar = async (req: Request, res: Response) => {
