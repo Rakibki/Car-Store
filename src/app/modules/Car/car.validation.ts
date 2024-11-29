@@ -1,5 +1,7 @@
 import Joi from "joi";
 
+
+// here car validateion
 const carValidationSchema = Joi.object({
   brand: Joi.string().required().messages({
     "string.base": "Brand must be a text string.",

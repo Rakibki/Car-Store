@@ -1,5 +1,7 @@
 import Joi from "joi";
 
+
+// here order validtion
 const orderValidationSchema = Joi.object({
   email: Joi.string().email().required().messages({
     "string.base": "Email must be a text string.",

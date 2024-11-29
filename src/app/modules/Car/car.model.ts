@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import CarInterface from "./car.interface";
 
-
+// car shema
 const carSchema = new Schema<CarInterface>({
   brand: {
     type: String,

@@ -1,3 +1,4 @@
+// car interface
 type CarInterface = {
   brand: string;
   model: string;

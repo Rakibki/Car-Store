@@ -3,12 +3,15 @@ import orderInterface from "./order.interface";
 import { ObjectId } from "mongodb";
 import OrderModel from "./order.model";
 
+// place a order
 export const createOrder = async (orderInfo: orderInterface) => {
   const car = await CarModel.findOne({ _id: new ObjectId(orderInfo?.car) });
 
+  // if Car is not found
   if (!car) {
-    return "Car model not found";
+    return "Car is not found";
   }
+
 
   if (car.quantity < orderInfo?.quantity) {
     return `Insufficient stock! Only ${car.quantity} left.`;
@@ -16,7 +19,8 @@ export const createOrder = async (orderInfo: orderInterface) => {
 
   const newQuantity = car.quantity - orderInfo?.quantity;
 
-   await CarModel.updateOne(
+  // update quantity and inStock
+  await CarModel.updateOne(
     { _id: new ObjectId(orderInfo?.car) },
     {
       $set: {
@@ -25,9 +29,10 @@ export const createOrder = async (orderInfo: orderInterface) => {
       },
     }
   );
-  return await OrderModel.create(orderInfo)
+  return await OrderModel.create(orderInfo);
 };
 
+// calculate our revenue
 export const getRevenue = async () => {
   return await OrderModel.aggregate([
     {

@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import orderInterface from "./order.interface";
 
+
+// orderSchema
 const orderSchema = new mongoose.Schema<orderInterface>({
   email: {
     type: String,
