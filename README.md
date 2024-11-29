@@ -4,14 +4,14 @@ This is a TypeScript-based Express application for managing a Car Store. It inte
 
 ## Features
  ### Car Management
-    - create a car
-    - get all car
-    - get a specific car
-    - update car
-    - delete a car 
+    create a car
+    get all car
+    get a specific car
+    update car
+    delete a car 
  ### Order Management
-    - Place an Order
-    - Revenue Calculation
+    Place an Order
+    Revenue Calculation
 
 ## Setup Instructions
   ### Clone the repository:
