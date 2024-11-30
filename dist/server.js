@@ -17,6 +17,7 @@ const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./app/config"));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // connecting db
         yield mongoose_1.default.connect(config_1.default.db_url);
         app_1.default.listen(config_1.default.port, () => {
             console.log(`server is at ${config_1.default.port}`);

@@ -7,6 +7,7 @@ import {
   updateAcar,
 } from "./car.service";
 import carValidationSchema from "./car.validation";
+import CarInterface from "./car.interface";
 
 // create a car
 export const createCar: RequestHandler = async (
@@ -15,7 +16,7 @@ export const createCar: RequestHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const carData = req.body;
+    const carData: CarInterface = req.body;
     const { error, value } = carValidationSchema.validate(carData);
     if (error) {
       res.status(400).json({

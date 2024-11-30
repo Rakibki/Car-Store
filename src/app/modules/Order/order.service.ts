@@ -12,7 +12,6 @@ export const createOrder = async (orderInfo: orderInterface) => {
     return "Car is not found";
   }
 
-
   if (car.quantity < orderInfo?.quantity) {
     return `Insufficient stock! Only ${car.quantity} left.`;
   }
